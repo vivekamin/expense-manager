@@ -9,8 +9,13 @@ router.get('/',(req,res,next) =>{
 });
 
 router.post('/',(req,res,next) =>{
+    const expense = {
+        name: req.body.name,
+        amount: req.body.amount
+    };
     res.status(200).json({
-        message: "POST request success"
+        message: "Expense Created",
+        data: expense
     });
 });
 
