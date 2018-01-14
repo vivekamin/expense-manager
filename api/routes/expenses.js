@@ -34,19 +34,18 @@ router.post('/', (req, res, next) => {
     expense
         .save()
         .then( result => {
-            console.log("sfdsfdsf");
-            
             console.log(result);
+            res.status(200).json(result);
             
         }).catch( error => {
             console.log(error);
+            res.status(500).json({
+                error: error
+            });
             
         });
 
-    res.status(200).json({
-        message: "Expense Created",
-        data: expense
-    });
+   
 });
 
 router.get('/:expenseId', (req, res, next) => {
@@ -64,18 +63,53 @@ router.get('/:expenseId', (req, res, next) => {
 
 router.patch('/:expenseId', (req, res, next) => {
     const id = req.params.expenseId;
-    res.status(200).json({
-        message: `PATCH Request for product ${id}`,
-        id: id
-    });
+    console.log(req);
+    const bodyParams = req.body
+    let updatedObject = req.body
+   /* console.log(updatedObject);
+    if (bodyParams.name){
+        console.log(bodyParams.name);
+        updatedObject['name'] = bodyParams.name
+        
+    }
+    if(bodyParams.amount){
+        updatedObject['amount'] = bodyParams.amount
+
+    }   */
+    Expense.update({_id: id},{$set : updatedObject})
+        .exec()
+        .then( result => {
+            //console.log(result);
+            res.status(200).json(result)
+            
+        })
+        .catch( error => {
+            //console.log(error);
+            res.status(500).json({
+                error:error
+            })
+            
+        });
+    
 });
 
 router.delete('/:expenseId', (req, res, next) => {
     const id = req.params.expenseId;
-    res.status(200).json({
-        message: `DELETED product ${id}`,
-        id: id
-    });
+    Expense.remove({_id: id})
+        .exec()
+        .then( result => {
+            //console.log(result);
+            res.status(200).json(result)
+            
+        })
+        .catch(error => {
+            //console.log(error);
+            res.status(500).json({
+                error: error
+            })
+            
+        });
+    
 });
 
 module.exports = router;
