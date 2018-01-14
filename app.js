@@ -1,11 +1,22 @@
 const express = require('express');
+const mongoose = require('mongoose');
+
 const app = express();
+
 const morgan = require('morgan');
 const bodyParser = require('body-parser');
 
+const process_env = require('./env')
+
 const expensesRoutes = require('./api/routes/expenses');
 
-app.use(morgan('dev'))
+mongoose.connect('mongodb://'+process_env.USERNAME+':'+process_env.PASSWD+'@expense-manager-shard-00-00-xmdye.mongodb.net:27017,expense-manager-shard-00-01-xmdye.mongodb.net:27017,expense-manager-shard-00-02-xmdye.mongodb.net:27017/test?ssl=true&replicaSet=expense-manager-shard-0&authSource=admin',{
+   
+    useMongoClient:true 
+});
+mongoose.Promise = require('bluebird');
+
+app.use(morgan('dev'));
 app.use(bodyParser.urlencoded({extended: false}));
 app.use(bodyParser.json());
 
