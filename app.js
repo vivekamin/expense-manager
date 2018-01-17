@@ -6,7 +6,7 @@ const app = express();
 const morgan = require('morgan');
 const bodyParser = require('body-parser');
 
-const process_env = require('./env')
+const process_env = require('./env_var/env')
 
 const expensesRoutes = require('./api/routes/expenses');
 console.log(process_env.USERNAME);
