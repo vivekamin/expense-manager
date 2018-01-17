@@ -28,7 +28,8 @@ router.post('/', (req, res, next) => {
     const expense = new Expense({
         _id: new mongoose.Types.ObjectId(),
         name: req.body.name,
-        amount: req.body.amount
+        amount: req.body.amount,
+        date: req.body.date
     });
 
     expense
