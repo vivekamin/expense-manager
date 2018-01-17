@@ -9,8 +9,8 @@ const bodyParser = require('body-parser');
 const process_env = require('./env')
 
 const expensesRoutes = require('./api/routes/expenses');
-// console.log(process_env.USERNAME);
-// console.log(process_env.PASSWD);
+console.log(process_env.USERNAME);
+console.log(process_env.PASSWD);
 
 
 
