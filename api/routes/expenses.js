@@ -8,10 +8,27 @@ const Expense = require('../models/expense');
 router.get('/', (req, res, next) => {
 
     Expense.find()
+        .select('name amount _id')
         .exec()
         .then( docs => {
-            console.log(docs);
-            res.status(200).json(docs);
+            const response = {
+                count: docs.length,
+                expenses: docs.map( doc => {
+                    return {
+                        name: doc.name,
+                        amount: doc.amount,
+                        date: doc.date,
+                        _id: doc._id,
+                        request:{
+                            type: 'GET',
+                            url: `http://localhost:8000/expense/${doc._id}`
+                        }
+                        
+                    }
+                })
+            };
+            //console.log(docs);
+            res.status(200).json(response);
             
         })
         .catch( error => {
@@ -36,7 +53,19 @@ router.post('/', (req, res, next) => {
         .save()
         .then( result => {
             console.log(result);
-            res.status(200).json(result);
+            res.status(200).json({
+                message: "Expense Created",
+                expense:{
+                    name: result.name,
+                    amount: result.amount,
+                    date: result.date,
+                    _id: result._id,
+                    request: {
+                        type: 'GET',
+                        url: `http://localhost:8000/expense/${result._id}`
+                    }
+                }
+            });
             
         }).catch( error => {
             console.log(error);
@@ -54,7 +83,20 @@ router.get('/:expenseId', (req, res, next) => {
     Expense.findById(id).exec()
            .then( doc => {
                console.log('From DB',doc);
-               res.status(200).json(doc)
+               if(doc){
+                res.status(200).json({
+                    expense: doc,
+                    request:{
+                        type: 'GET',
+                        url: `http://localhost:8000/expense/${doc._id}`
+                    }
+                });
+               } else {
+                   res.status(400).json({
+                       message: "No valid Entry Found"
+                   })
+               }
+               
            })
            .catch( err => {
                console.log(err);
@@ -81,7 +123,13 @@ router.patch('/:expenseId', (req, res, next) => {
         .exec()
         .then( result => {
             //console.log(result);
-            res.status(200).json(result)
+            res.status(200).json({
+                message: "Expense updated",
+                updatedExpense: {
+                    type: 'GET',
+                    url: `http://localhost:8000/expense/${id}`
+                }
+            })
             
         })
         .catch( error => {
@@ -100,7 +148,14 @@ router.delete('/:expenseId', (req, res, next) => {
         .exec()
         .then( result => {
             //console.log(result);
-            res.status(200).json(result)
+            res.status(200).json({
+                message: "Expense Deleted",
+                request: {
+                    type: 'POST',
+                    url: 'http://localhost:8000/expense',
+                    body: { name: 'String', amount: 'Number', date: 'Date' }
+                }
+            })
             
         })
         .catch(error => {
