@@ -14,7 +14,7 @@ console.log(process_env.PASSWD);
 
 
 
-mongoose.connect('mongodb://'+process_env.USERNAME+':'+process_env.PASSWD+'@expense-manager-shard-00-00-xmdye.mongodb.net:27017,expense-manager-shard-00-01-xmdye.mongodb.net:27017,expense-manager-shard-00-02-xmdye.mongodb.net:27017/test?ssl=true&replicaSet=expense-manager-shard-0&authSource=admin',{
+mongoose.connect('mongodb://'+process_env.USERNAME+':'+process_env.PASSWD+process_env.PATH,{
    
     useMongoClient:true 
 });
