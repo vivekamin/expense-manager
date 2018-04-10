@@ -9,12 +9,12 @@ const bodyParser = require('body-parser');
 //const process_env = require('./env_var/env')
 
 const expensesRoutes = require('./api/routes/expenses');
-console.log(process.env.USERNAME);
+console.log(process.env.USERNM);
 console.log(process.env.PASSWD);
 
 
 
-mongoose.connect('mongodb://'+process.env.USERNAME+':'+process.env.PASSWD+'@expense-manager-shard-00-00-xmdye.mongodb.net:27017,expense-manager-shard-00-01-xmdye.mongodb.net:27017,expense-manager-shard-00-02-xmdye.mongodb.net:27017/test?ssl=true&replicaSet=expense-manager-shard-0&authSource=admin',{
+mongoose.connect('mongodb://'+process.env.USERNM+':'+process.env.PASSWD+'@expense-manager-shard-00-00-xmdye.mongodb.net:27017,expense-manager-shard-00-01-xmdye.mongodb.net:27017,expense-manager-shard-00-02-xmdye.mongodb.net:27017/test?ssl=true&replicaSet=expense-manager-shard-0&authSource=admin',{
    
     useMongoClient:true 
 });
