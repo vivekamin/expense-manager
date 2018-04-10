@@ -6,7 +6,7 @@ const app = express();
 const morgan = require('morgan');
 const bodyParser = require('body-parser');
 
-const process_env = require('./env_var/env')
+//const process_env = require('./env_var/env')
 
 const expensesRoutes = require('./api/routes/expenses');
 console.log(process.env.USERNAME);
@@ -14,7 +14,7 @@ console.log(process.env.PASSWD);
 
 
 
-mongoose.connect('mongodb://'+process_env.USERNAME+':'+process_env.PASSWD+process_env.PATH,{
+mongoose.connect('mongodb://'+process.env.USERNAME+':'+process.env.PASSWD+process.env.PATH,{
    
     useMongoClient:true 
 });
