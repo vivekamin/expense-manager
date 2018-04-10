@@ -2,7 +2,7 @@
   "name": "expense-manager",
   "version": "1.0.0",
   "description": "RestFUL API for Expense manager",
-  "main": "index.js",
+  "main": "server.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
     "start-dev": " nodemon server.js",
